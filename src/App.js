@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 const App = () => {
   return (
     <div className="App">
-      <button onClick={triggerFull}>Make fullscreen</button>
+      <button>hello</button>
     </div>
   );
 };
