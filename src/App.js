@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 const App = () => {
   return (
     <div className="App">
-      <h1>{onLine ? 'Online' : 'Offline'}</h1>
+      <h1>Hi</h1>
     </div>
   );
 };
