@@ -1,20 +1,32 @@
-import React, { useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
-const useBeforeLeave = onBefore => {
-  const handle = () => console.log('leaving');
+const useNetwork = onChange => {
+  const [status, setStatus] = useState(navigator.onLine);
+  const handleChange = () => {
+    if (typeof onChange === 'function') {
+      onChange(navigator.onLine);
+    }
+    setStatus(navigator.onLine);
+  };
   useEffect(() => {
-    document.addEventListener('mouseleave', handle);
-    return () => document.removeEventListener('mouseleave', handle);
+    window.addEventListener('online', handleChange);
+    window.addEventListener('offline', handleChange);
+    return () => {
+      window.removeEventListener('online', handleChange);
+      window.removeEventListener('offline', handleChange);
+    };
   }, []);
-  if (typeof onBefore !== 'function') return;
+  return status;
 };
 
 const App = () => {
-  const begForLife = () => console.log('plz dont leave');
-  useBeforeLeave(begForLife);
+  const handleNetworkChange = online => {
+    console.log(online ? 'We just went online' : 'We are offline');
+  };
+  const onLine = useNetwork(handleNetworkChange);
   return (
     <div className="App">
-      <h1>Hello</h1>
+      <h1>{onLine ? 'Online' : 'Offline'}</h1>
     </div>
   );
 };
