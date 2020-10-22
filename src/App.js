@@ -1,22 +1,22 @@
 import React, { useEffect } from 'react';
-import { useInput } from './useInput'
-import { useTabs } from './useTabs'
-import { useTitle } from './useTitle'
-import { useClick } from './useClick'
 
-const sections = [{
-  tab: "section 1", content: "I'm Section 1"
-},{
-  tab: "section 2", content: "I'm Section 2"
-}]
+const useBeforeLeave = onBefore => {
+  const handle = () => console.log('leaving');
+  useEffect(() => {
+    document.addEventListener('mouseleave', handle);
+    return () => document.removeEventListener('mouseleave', handle);
+  }, []);
+  if (typeof onBefore !== 'function') return;
+};
 
-function App() {
+const App = () => {
+  const begForLife = () => console.log('plz dont leave');
+  useBeforeLeave(begForLife);
   return (
     <div className="App">
-
-
+      <h1>Hello</h1>
     </div>
   );
-}
+};
 
 export default App;
